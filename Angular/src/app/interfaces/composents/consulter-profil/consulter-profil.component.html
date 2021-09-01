@@ -1,0 +1,16 @@
+<form  (ngSubmit)="onSubmit(f)" #f="ngForm" >
+    <div class="row">
+        <div class="col-md-6 col-sm-12">
+         
+                <input type="text"  [ngModel]="profile.nom" ngModel name="nom"   required  >
+                               
+        </div>
+
+        <div class="col-lg-12">
+        
+                <button type="submit" id="form-submit" [disabled]="f.invalid" class="main-button">Modifier votre Profil
+                    </button>
+          
+        </div>
+    </div>
+</form>

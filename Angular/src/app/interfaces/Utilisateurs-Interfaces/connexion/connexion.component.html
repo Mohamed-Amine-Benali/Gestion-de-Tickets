@@ -1,0 +1,41 @@
+<app-login-navbar></app-login-navbar>
+<br>
+<div class="parent clearfix">
+  <div class="bg-illustration">
+
+    <div class="burger-btn">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+  </div>
+
+
+
+
+  <div class="login">
+    <div class="container">
+      <h1>Entrez vos identifiants afin d'accéder   à votre compte</h1><br>
+  
+      <div class="login-form">
+        <form #f="ngForm">
+          <input type="email" required     name="adresse_mail" [(ngModel)]="adresse_mail" placeholder="Adresse E-mail">
+          <input type="password"  required  name="mot_de_passe" [(ngModel)]="mot_de_passe" placeholder="Mot De Passe">
+
+          <div class="remember-form">
+            <input type="checkbox">
+            <span>Remember me</span>
+          </div>
+          <div class="forget-pass">
+            <a routerLink="/inscription"> Inscrivez-vous </a>
+          </div>
+
+          <button [disabled]="f.invalid" (click)="Login()"  type="submit">connexion</button>
+
+        </form>
+      </div>
+  
+    </div>
+    </div>
+</div>

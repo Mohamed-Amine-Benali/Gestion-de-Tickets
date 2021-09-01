@@ -1,0 +1,138 @@
+<br><br><br>
+<br><br><br>
+<br><br><br>
+
+
+
+  
+        <div class="container">
+  <div class="row">
+    <div class="offset-3 col-8">
+      <div class="search-div">
+        
+        <mat-form-field class="search-form-field" floatLabel="never">
+          <input matInput [(ngModel)]="searchKey" placeholder="Chercher" autocomplete="off" (keyup)="applyFilter()">
+          <button mat-button matSuffix mat-icon-button aria-label="Clear"*ngIf="searchKey"  (click)="onSearchClear()">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+    
+  
+  
+    </div>
+  </div>
+          
+        
+        <div class="mat-elevation-z8">
+          <mat-table [dataSource]="reponcesDataSource"  matSort   >
+            <ng-container matColumnDef="id_reponse">
+              <mat-header-cell  *matHeaderCellDef mat-sort-header >ID</mat-header-cell>
+              <mat-cell *matCellDef="let element">{{element.id_reponse}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="date_reponse">
+              <mat-header-cell  *matHeaderCellDef mat-sort-header  >date_reponse</mat-header-cell>
+              <mat-cell *matCellDef="let element">{{element.date_reponse|date}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="adresse_mail">
+              <mat-header-cell  *matHeaderCellDef mat-sort-header >adresse_mail</mat-header-cell>
+              <mat-cell *matCellDef="let element">{{element.adresse_mail}}</mat-cell>
+            </ng-container>
+          
+            
+            <ng-container matColumnDef="consulter">
+                <mat-header-cell *matHeaderCellDef>Plus de détails </mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                  <button mat-icon-button (click)="openScrollableContent(longContent,row)"><mat-icon>subject</mat-icon></button>
+                </mat-cell>
+              </ng-container>
+            
+            
+         
+            <ng-container matColumnDef="actions">
+              <mat-header-cell *matHeaderCellDef  >Supprimer</mat-header-cell>
+              <mat-cell *matCellDef="let row">
+                <button mat-icon-button color="warn" (click)="onDelete(row)" ><mat-icon>delete_outline</mat-icon></button>
+              </mat-cell>
+            </ng-container>
+          
+      
+            <ng-container matColumnDef="loading">
+              <mat-footer-cell *matFooterCellDef  colspan="6">
+                Loading data...
+              </mat-footer-cell>
+            </ng-container>
+            <ng-container matColumnDef="noData">
+              <mat-footer-cell *matFooterCellDef  colspan="6">
+                No data.
+              </mat-footer-cell>
+            </ng-container>
+        
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      
+            <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':reponcesDataSource!=null}"></mat-footer-row>
+            <mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(reponcesDataSource!=null && reponcesDataSource?.data.length==0)}"></mat-footer-row>
+      
+          </mat-table>
+          <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" showFirstLastButtons></mat-paginator>
+        </div>
+        </div>
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<ng-template #longContent let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title">Plus de détails</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
+            <ngb-panel title="Description de panne">
+              <ng-template ngbPanelContent>
+               {{panne.description}}
+              </ng-template>
+            </ngb-panel>
+            <ngb-panel>
+              <ng-template ngbPanelTitle>
+                <span>&#9733; <b>Rapport </b>de l'expert &#9733;</span>
+              </ng-template>
+              <ng-template ngbPanelContent>
+               Type d'équipement :<p>{{type.type_equipement}}</p><br>
+               Type de panne :<p>{{type.type_panne}}</p><br>
+               Type de problèmes :<p>{{type.type_probleme}}</p>
+            
+               
+
+              </ng-template>
+            </ngb-panel>
+            <ngb-panel>
+                <ng-template ngbPanelTitle>
+                  <span>&#9733; <b>Rapport </b>de technicien &#9733;</span>
+                </ng-template>
+                <ng-template ngbPanelContent>
+                  {{reponse}}
+                </ng-template>
+              </ngb-panel>
+          </ngb-accordion>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+    </div>
+  </ng-template>
+  

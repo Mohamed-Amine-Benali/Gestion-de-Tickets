@@ -1,0 +1,98 @@
+  <br><br><br>   
+  <br><br><br>     
+
+  <br><br><br>     
+ 
+
+<div class="container">
+    <div class="row">
+      <div class="offset-3 col-8">
+        <div class="search-div">
+        
+          <mat-form-field class="search-form-field" floatLabel="never">
+            <input matInput [(ngModel)]="searchKey" placeholder="Chercher" autocomplete="off" (keyup)="applyFilter()">
+            <button mat-button matSuffix mat-icon-button aria-label="Clear"*ngIf="searchKey"  (click)="onSearchClear()">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+      
+    
+    
+      </div>
+    </div>
+            
+          
+          <div class="mat-elevation-z8">
+            <mat-table [dataSource]="usersDataSource"  matSort   >
+              <ng-container matColumnDef="id_panne">
+                <mat-header-cell  *matHeaderCellDef mat-sort-header >ID</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{element.id_panne}}</mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="date_panne">
+                <mat-header-cell  *matHeaderCellDef mat-sort-header  >date</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{element.date_panne|date}}</mat-cell>
+              </ng-container>
+              
+              <ng-container matColumnDef="adresse_mail">
+                <mat-header-cell  *matHeaderCellDef mat-sort-header  >email</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{element.adresse_mail}}</mat-cell>
+              </ng-container>
+
+             
+              
+              <ng-container matColumnDef="action">
+                <mat-header-cell *matHeaderCellDef  >Voir Plus</mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                  <button mat-icon-button  placement="bottom" ngbTooltip="Voir Plus" (click)="openXl(content,row)"  ><mat-icon>visibility</mat-icon></button>
+                </mat-cell>
+              </ng-container>
+
+
+              <ng-container matColumnDef="action2">
+                <mat-header-cell *matHeaderCellDef  >Répondre</mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                  <button mat-icon-button placement="right" ngbTooltip="Rapport" (click)="onCreate(row)" ><mat-icon>post_add</mat-icon></button>
+                </mat-cell>
+              </ng-container>
+              
+             
+       
+        
+              <ng-container matColumnDef="loading">
+                <mat-footer-cell *matFooterCellDef  colspan="6">
+                  Loading data...
+                </mat-footer-cell>
+              </ng-container>
+              <ng-container matColumnDef="noData">
+                <mat-footer-cell *matFooterCellDef  colspan="6">
+                  No data.
+                </mat-footer-cell>
+              </ng-container>
+          
+              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        
+              <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':usersDataSource!=null}"></mat-footer-row>
+              <mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(usersDataSource!=null && usersDataSource?.data.length==0)}"></mat-footer-row>
+        
+            </mat-table>
+            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" showFirstLastButtons></mat-paginator>
+          </div>
+          </div>
+    
+
+          <ng-template #content let-modal>
+            <div class="modal-header">
+              <h4 class="modal-title">Descriotion de la Demande</h4>
+              <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              {{Description}}
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-light"(click)="modal.close('Close click')">Close</button>
+            </div>
+          </ng-template>

@@ -1,0 +1,318 @@
+<br><br><br>
+<br>
+<mat-tab-group mat-align-tabs="center">
+
+    <mat-tab  label="Tous les demandes">
+        <br><br>
+
+
+        
+<div class="container">
+    <div class="row">
+      <div class="offset-3 col-8">
+        <div class="search-div">
+          <button mat-raised-button (click)="onCreate()"  >
+            <mat-icon>add</mat-icon>Ajouter
+          </button>
+          <mat-form-field class="search-form-field" floatLabel="never">
+            <input matInput [(ngModel)]="searchKey" placeholder="Chercher" autocomplete="off" (keyup)="applyFilter()">
+            <button mat-button matSuffix mat-icon-button aria-label="Clear"*ngIf="searchKey"  (click)="onSearchClear()">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+      
+    
+    
+      </div>
+    </div>
+            
+          
+          <div class="mat-elevation-z8">
+            <mat-table [dataSource]="usersDataSource"  matSort   >
+              <ng-container matColumnDef="id_panne">
+                <mat-header-cell  *matHeaderCellDef mat-sort-header >ID</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{element.id_panne}}</mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="date_panne">
+                <mat-header-cell  *matHeaderCellDef mat-sort-header  >Date de la demande</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{element.date_panne|date}}</mat-cell>
+              </ng-container>
+              
+             
+              <ng-container matColumnDef="Plus">
+                <mat-header-cell *matHeaderCellDef >Plus de détails</mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                  <button mat-icon-button   (click)="openScrollableContent2(longContent2,row)"  ><mat-icon>subject</mat-icon></button>
+               
+                </mat-cell>
+              </ng-container>
+             
+              <ng-container matColumnDef="actions">
+                <mat-header-cell *matHeaderCellDef  >Supprimer</mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                  <button mat-icon-button color="warn" (click)="onDelete(row)" ><mat-icon>delete_outline</mat-icon></button>
+                </mat-cell>
+              </ng-container>
+            
+        
+              <ng-container matColumnDef="loading">
+                <mat-footer-cell *matFooterCellDef  colspan="6">
+                  Loading data...
+                </mat-footer-cell>
+              </ng-container>
+              <ng-container matColumnDef="noData">
+                <mat-footer-cell *matFooterCellDef  colspan="6">
+                  No data.
+                </mat-footer-cell>
+              </ng-container>
+          
+              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        
+              <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':usersDataSource!=null}"></mat-footer-row>
+              <mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(usersDataSource!=null && usersDataSource?.data.length==0)}"></mat-footer-row>
+        
+            </mat-table>
+            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" showFirstLastButtons></mat-paginator>
+          </div>
+          </div>
+    
+    
+        
+    
+    
+    <br><br><br>
+
+    </mat-tab>
+      
+    <mat-tab label="demandes traitées">
+        <br><br>
+
+      
+
+
+        
+        <div class="container">
+            <div class="row">
+              <div class="offset-3 col-8">
+                <div class="search-div">
+                  <button mat-raised-button (click)="onCreate()" >
+                    <mat-icon>add</mat-icon>Ajouter
+                  </button>
+                  <mat-form-field class="search-form-field" floatLabel="never">
+                    <input matInput [(ngModel)]="searchKey" placeholder="Chercher" autocomplete="off" (keyup)="applyFilter()">
+                    <button mat-button matSuffix mat-icon-button aria-label="Clear"*ngIf="searchKey"  (click)="onSearchClear()">
+                      <mat-icon>close</mat-icon>
+                    </button>
+                  </mat-form-field>
+                </div>
+              
+            
+            
+              </div>
+            </div>
+                    
+                  
+                  <div class="mat-elevation-z8">
+                    <mat-table [dataSource]="usersDataSource1"  matSort   >
+                      <ng-container matColumnDef="id_panne">
+                        <mat-header-cell  *matHeaderCellDef mat-sort-header >ID</mat-header-cell>
+                        <mat-cell *matCellDef="let element">{{element.id_panne}}</mat-cell>
+                      </ng-container>
+                      <ng-container matColumnDef="date_panne">
+                        <mat-header-cell  *matHeaderCellDef mat-sort-header  >Date de la demande</mat-header-cell>
+                        <mat-cell *matCellDef="let element">{{element.date_panne|date}}</mat-cell>
+                      </ng-container>
+                      
+                     
+                    
+              <ng-container matColumnDef="Plus">
+                <mat-header-cell *matHeaderCellDef  >Plus de détails</mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                  <button mat-icon-button   (click)="openScrollableContent(longContent,row)" ><mat-icon>subject</mat-icon></button>
+                </mat-cell>
+              </ng-container>
+                     
+                      <ng-container matColumnDef="actions">
+                        <mat-header-cell *matHeaderCellDef  >Supprimer</mat-header-cell>
+                        <mat-cell *matCellDef="let row">
+                          <button mat-icon-button color="warn"  (click)="onDelete(row)"><mat-icon>delete_outline</mat-icon></button>
+                        </mat-cell>
+                      </ng-container>
+                    
+                
+                      <ng-container matColumnDef="loading">
+                        <mat-footer-cell *matFooterCellDef  colspan="6">
+                          Loading data...
+                        </mat-footer-cell>
+                      </ng-container>
+                      <ng-container matColumnDef="noData">
+                        <mat-footer-cell *matFooterCellDef  colspan="6">
+                          No data.
+                        </mat-footer-cell>
+                      </ng-container>
+                  
+                      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                
+                      <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':usersDataSource1!=null}"></mat-footer-row>
+                      <mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(usersDataSource1!=null && usersDataSource1?.data.length==0)}"></mat-footer-row>
+                
+                    </mat-table>
+                    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" showFirstLastButtons></mat-paginator>
+                  </div>
+                  </div>
+            
+            
+                
+            
+            
+            <br><br><br>
+
+
+        
+    </mat-tab>
+
+    <mat-tab label="en cours de traitement">
+        <br><br>
+
+       
+
+        
+        <div class="container">
+            <div class="row">
+              <div class="offset-3 col-8">
+                <div class="search-div">
+                  <button mat-raised-button (click)="onCreate()"  >
+                    <mat-icon>add</mat-icon>Ajouter
+                  </button>
+                  <mat-form-field class="search-form-field" floatLabel="never">
+                    <input matInput [(ngModel)]="searchKey" placeholder="Chercher" autocomplete="off" (keyup)="applyFilter()">
+                    <button mat-button matSuffix mat-icon-button aria-label="Clear"*ngIf="searchKey"  (click)="onSearchClear()">
+                      <mat-icon>close</mat-icon>
+                    </button>
+                  </mat-form-field>
+                </div>
+              
+            
+            
+              </div>
+            </div>
+                    
+                  
+                  <div class="mat-elevation-z8">
+                    <mat-table [dataSource]="usersDataSource2"  matSort   >
+                      <ng-container matColumnDef="id_panne">
+                        <mat-header-cell  *matHeaderCellDef mat-sort-header >ID</mat-header-cell>
+                        <mat-cell *matCellDef="let element">{{element.id_panne}}</mat-cell>
+                      </ng-container>
+                      <ng-container matColumnDef="date_panne">
+                        <mat-header-cell  *matHeaderCellDef mat-sort-header  >Date de la demande</mat-header-cell>
+                        <mat-cell *matCellDef="let element">{{element.date_panne|date}}</mat-cell>
+                      </ng-container>
+                      
+                     
+                    
+                     
+              <ng-container matColumnDef="Plus">
+                <mat-header-cell *matHeaderCellDef  >Plus de détails</mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                  <button mat-icon-button    (click)="openScrollableContent2(longContent2,row)"><mat-icon>subject</mat-icon></button>
+                </mat-cell>
+              </ng-container>
+                      <ng-container matColumnDef="actions">
+                        <mat-header-cell *matHeaderCellDef >Supprimer</mat-header-cell>
+                        <mat-cell *matCellDef="let row">
+                          <button mat-icon-button color="warn" (click)="onDelete(row)"  ><mat-icon>delete_outline</mat-icon></button>
+                        </mat-cell>
+                      </ng-container>
+                    
+                
+                      <ng-container matColumnDef="loading">
+                        <mat-footer-cell *matFooterCellDef  colspan="6">
+                          Loading data...
+                        </mat-footer-cell>
+                      </ng-container>
+                      <ng-container matColumnDef="noData">
+                        <mat-footer-cell *matFooterCellDef  colspan="6">
+                          No data.
+                        </mat-footer-cell>
+                      </ng-container>
+                  
+                      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                
+                      <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':usersDataSource2!=null}"></mat-footer-row>
+                      <mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(usersDataSource2!=null && usersDataSource2?.data.length==0)}"></mat-footer-row>
+                
+                    </mat-table>
+                    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" showFirstLastButtons></mat-paginator>
+                  </div>
+                  </div>
+            
+            
+                
+            
+            
+            <br><br> 
+             <br>
+
+        
+    </mat-tab>
+
+</mat-tab-group>
+
+
+
+<ng-template #longContent let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">{{date}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+ {{Description}}
+
+ 
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light"(click)="openLg(content)">Réponse</button>
+  </div>
+</ng-template>
+
+
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Réponse</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+ 
+  <p>{{retour.description}}</p>
+
+  </div>
+ 
+</ng-template>
+
+
+
+
+<ng-template #longContent2 let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">{{date}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+ {{Description}}
+
+ 
+  </div>
+ 
+</ng-template>

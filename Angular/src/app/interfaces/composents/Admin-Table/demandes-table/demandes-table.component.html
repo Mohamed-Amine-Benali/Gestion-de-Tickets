@@ -1,0 +1,184 @@
+<br><br><br>
+<br><br><br>
+<br><br><br>
+
+
+
+<div class="container">
+    <div class="row">
+      <div class="offset-3 col-8">
+        <div class="search-div">
+          <button mat-raised-button (click)="onCreate()" >
+            <mat-icon>add</mat-icon>Ajouter
+          </button>
+          <mat-form-field class="search-form-field" floatLabel="never">
+            <input matInput [(ngModel)]="searchKey" placeholder="Chercher" autocomplete="off" (keyup)="applyFilter()">
+            <button mat-button matSuffix mat-icon-button aria-label="Clear"*ngIf="searchKey"  (click)="onSearchClear()">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+      
+    
+    
+      </div>
+    </div>
+            
+          
+    
+          <div class="mat-elevation-z8">
+            <mat-table [dataSource]="usersDataSource"  matSort   >
+              <ng-container matColumnDef="id">
+                <mat-header-cell  *matHeaderCellDef mat-sort-header >ID</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{element.id_panne}}</mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="adresse_mail">
+                <mat-header-cell  *matHeaderCellDef mat-sort-header>Email</mat-header-cell>
+                <mat-cell *matCellDef="let element" >{{element.adresse_mail}}</mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="date_panne">
+                <mat-header-cell  *matHeaderCellDef mat-sort-header >Date de la demande</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{element.date_panne|date}}</mat-cell>
+              </ng-container>
+           
+    
+              
+            
+              <ng-container matColumnDef="actions">
+                <mat-header-cell *matHeaderCellDef  >Options</mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                  <button mat-icon-button (click)="openScrollableContent(longContent,row)"  placement="left" ngbTooltip="Voir Plus"><mat-icon>visibility</mat-icon></button>
+                  <button mat-icon-button (click)="openSm(profil,row)" placement="bottom" ngbTooltip="Consulter Profil"><mat-icon>perm_identity</mat-icon></button>
+                  <button mat-icon-button  placement="bottom" ngbTooltip="Modifier" (click)="update(row.id_panne)"><mat-icon>launch</mat-icon></button>
+                  <button mat-icon-button color="warn" placement="right" ngbTooltip="Supprimer"(click)="onDelete(row)" ><mat-icon>delete_outline</mat-icon></button>
+
+
+                  
+
+                </mat-cell>
+              </ng-container>
+            
+        
+              <ng-container matColumnDef="loading">
+                <mat-footer-cell *matFooterCellDef  colspan="6">
+                  Loading data...
+                </mat-footer-cell>
+              </ng-container>
+              <ng-container matColumnDef="noData">
+                <mat-footer-cell *matFooterCellDef  colspan="6">
+                  No data.
+                </mat-footer-cell>
+              </ng-container>
+          
+              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        
+              <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':usersDataSource!=null}"></mat-footer-row>
+              <mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(usersDataSource!=null && usersDataSource?.data.length==0)}"></mat-footer-row>
+        
+            </mat-table>
+            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" showFirstLastButtons></mat-paginator>
+          </div>
+          </div>
+
+
+
+
+
+          <ng-template #longContent let-modal>
+            <div class="modal-header">
+              <h3 class="modal-title">Description</h3>
+              <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">&times;</span>
+              </button>
+          
+            </div>
+
+
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-6">
+                <p><mat-icon aria-hidden="false" color="accent" aria-label="Example home icon">vpn_key</mat-icon> {{key}}</p>
+              </div>
+
+                  <div class="col-6">
+                 <p> <mat-icon aria-hidden="false"color="accent" aria-label="Example home icon">account_circle  </mat-icon>{{utilisateur}} </p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-6">
+                  <mat-icon aria-hidden="false" color="accent" aria-label="Example home icon">pending_actions</mat-icon> {{datee|date}}
+                </div>
+
+                <div class="col-6">
+                  <mat-icon aria-hidden="false"color="accent" aria-label="Example home icon">speaker_notes</mat-icon> {{reponse}} <br>
+                </div>
+              </div>
+        <br>
+            
+              {{desc}}
+          
+            </div>
+            <div class="modal-footer">
+              <button mat-stroked-button color="accent" (click)="modal.close('Close click')">Close</button>
+            </div>
+          </ng-template>
+
+
+
+
+
+
+
+
+
+
+
+          <ng-template #profil let-modal>
+            <div class="modal-header">
+              <h4 class="modal-title"> Profil </h4>
+              <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+
+            <div class="modal-body">
+        
+
+                  <mat-icon aria-hidden="false" color="primary" aria-label="Example home icon">badge</mat-icon> {{client.nom}}  {{client.prenom}} <br>
+                
+               
+
+              
+                <div class="row">
+                  <div class="col-6">
+                    <mat-icon aria-hidden="false" color="primary" aria-label="Example home icon">phone</mat-icon>{{client.tel}}
+                  </div>
+                  <div class="col-6">
+                    <mat-icon aria-hidden="false" color="primary" aria-label="Example home icon">transgender</mat-icon>{{client.genre}}
+                    
+                  </div>
+                </div>
+                <mat-icon aria-hidden="false" color="primary" aria-label="Example home icon">alternate_email</mat-icon>  {{client.adresse_mail}}<br>
+            
+                <mat-icon aria-hidden="false" color="primary" aria-label="Example home icon">event</mat-icon>{{client.date_de_naissance|date}}<br>
+              
+              
+             
+                <mat-icon aria-hidden="false" color="primary" aria-label="Example home icon">lock_open</mat-icon>{{client.enabled}}
+             
+             
+
+
+
+
+
+
+
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+            </div>
+          </ng-template>
+
+    

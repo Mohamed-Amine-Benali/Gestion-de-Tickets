@@ -1,0 +1,102 @@
+
+<form [formGroup]="profileForm"  #f="ngForm" (ngSubmit)="saveForm()" class="form-container">
+ 
+     
+     
+    
+        <div class="row">
+          <div class="col-md-6">
+            <mat-form-field class="full-width">
+              <input formControlName="nom" matInput placeholder="Nom" required>
+              <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-6">
+            <mat-form-field class="full-width">
+              <input  formControlName="prenom" matInput placeholder="Prénom" required>
+              <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <br>
+
+
+        <div class="row">
+            <div class="col-md-6">
+              <mat-form-field class="full-width">
+                <input type="text"  formControlName="tel" pattern="[0-9]{8}" matInput placeholder="Tél (+216)" required>
+                <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-md-6">
+                <mat-form-field class="full-width" >
+                    <mat-label>Date De Naissance</mat-label>
+                    <input  formControlName="date_de_naissance" matInput [matDatepicker]="picker" required>
+                    <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>            
+            </div>
+          </div>
+          <br>
+  
+
+
+
+
+
+
+
+
+        
+        <div class="row">
+            <div class="col-sm-6">
+                <mat-form-field class="full-width">
+                    <mat-label>E-mail</mat-label>
+                    <input matInput placeholder="pat@example.com" [(ngModel)]="adresse_mail" formControlName="adresse_mail" required>
+                    <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-sm-6">
+                <mat-form-field class="full-width">
+                    <mat-label>Mot De Passe</mat-label>
+                    <input matInput [type]="hide ? 'password' : 'text'"  formControlName="mot_de_passe" required>
+                    <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                      <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                </mat-form-field>
+              </div>
+        </div>
+        <br>
+
+        
+        <div class="row">
+            <div class="col-sm-6">
+                <mat-radio-group  formControlName="genre" class="margin-left" >
+                    <mat-radio-button value="Homme"> Homme  </mat-radio-button>
+                    <mat-radio-button value="Femme"> Femme </mat-radio-button>
+                </mat-radio-group>
+            </div>
+
+            <div class="col-sm-6">
+                <mat-form-field  class="full-width" appearance="fill">
+                    <mat-label>Role</mat-label>
+                    <select matNativeControl formControlName="type_utilisateur">
+                        <option value="Client">Client</option>
+                        <option value="Expert">Expert</option>
+                        <option value="Technicien">Technicien</option>
+                        <option value="Admin">Admin</option>
+                    </select>
+                  </mat-form-field>
+
+
+            </div>
+
+        </div> 
+        
+      
+  
+        <button  class="full-width"  mat-raised-button color="primary" [disabled]="f.invalid">Enregistrer</button>
+ 
+  </form>
